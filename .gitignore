@@ -12,3 +12,5 @@ Icon
 
 # SublimeText project files
 *.sublime-workspace
+
+node_modules
