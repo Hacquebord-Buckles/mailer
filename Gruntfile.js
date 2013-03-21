@@ -15,11 +15,14 @@ module.exports = function(grunt) {
                 options: {
                     baseUrl: 'js',
                     mainConfigFile: 'js/requirejs-config.js',
-                    name: 'mailer',
+                    name: 'vendor/almond',
                     out: 'js/mailer.min.js',
+                    include:['mailer'],
+                    insertRequire: ['mailer'],
                     exclude: [
                         'jquery'
-                    ]
+                    ],
+                    wrap: true
                 }
             }
         },
