@@ -66,5 +66,7 @@ define(['parsley'], function() {
         }
     };
 
+    window.Mailer = Mailer;
+
     return Mailer;
 });
