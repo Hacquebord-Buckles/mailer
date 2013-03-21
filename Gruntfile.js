@@ -16,7 +16,10 @@ module.exports = function(grunt) {
                     baseUrl: 'js',
                     mainConfigFile: 'js/requirejs-config.js',
                     name: 'mailer',
-                    out: 'js/mailer.min.js'
+                    out: 'js/mailer.min.js',
+                    exclude: [
+                        'jquery'
+                    ]
                 }
             }
         },
