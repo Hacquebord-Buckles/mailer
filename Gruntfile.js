@@ -19,9 +19,6 @@ module.exports = function(grunt) {
                     out: 'js/mailer.min.js',
                     include:['mailer'],
                     insertRequire: ['mailer'],
-                    exclude: [
-                        'jquery'
-                    ],
                     wrap: true
                 }
             }
