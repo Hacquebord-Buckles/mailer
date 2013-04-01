@@ -47,7 +47,7 @@ class Mailer
         $mail->SetFrom($data['email'], $data['name']);
         $mail->AddReplyTo($data['email'], $data['name']);
 
-        $mail->Subject = 'Bericht van ' . $data['name']. ' via het contactformulier';
+        $mail->Subject = 'Bericht van ' . $data['name'] . ' via het contactformulier';
 
         $mail->MsgHTML(nl2br($this->render('mail', $data, true)));
         $mail->AltBody = $this->render('mail', $data, true);
