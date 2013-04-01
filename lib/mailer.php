@@ -56,7 +56,7 @@ class Mailer
 
         if (self::json()) {
             self::renderJson(array(
-                'success' => 'true'
+                'success' => true
             ));
         }
         else {
