@@ -2,6 +2,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.initConfig({
         'cssmin': {
@@ -26,7 +27,18 @@ module.exports = function(grunt) {
         clean: [
             'css/mailer.min.css',
             'js/mailer.min.js'
-        ]
+        ],
+        watch: {
+            js: {
+                files: ['js/**/*.js', '!js/**/*.min.js'],
+                tasks: ['requirejs']
+            },
+            css: {
+                files: ['css/**/*.css', '!css/**/*.min.css'],
+                tasks: ['cssmin']
+            }
+
+        }
     });
 
     grunt.registerTask('default', ['cssmin', 'requirejs']);
