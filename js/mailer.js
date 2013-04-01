@@ -35,6 +35,23 @@ define(['parsley'], function() {
             var context = this;
             var url = this.$form.attr('action') + '?json';
 
+            var fail = $.proxy(function(description) {
+                this.$form.find('.alert.error').show();
+
+                if (description) {
+                    this.$form.find('.alert.error .description').html(description);
+                }
+            }, this);
+
+            var success = $.proxy(function() {
+                this.$form.find('.alert.error').hide();
+
+                this.$form.find('.alert.alert-success').show();
+                this.$form.find('button[type=submit]').hide();
+
+                this.$form.parsley('destroy');
+            }, this);
+
             $.ajax(url, {
                 data: this.$form.serialize(),
                 type: 'POST',
@@ -43,7 +60,28 @@ define(['parsley'], function() {
                     this.loading(true);
                 }
             }).done(function(data) {
-            }).fail(function(xhr, status) {
+                if (data.success && data.success === true) {
+                    success();
+                }
+                else {
+                    fail();
+                }
+            }).fail(function(xhr) {
+                if (console && console.log) {
+                    console.log(xhr);
+                }
+
+                var description;
+
+                try {
+                    var response = $.parseJSON(xhr.responseText);
+                    if (response.error) {
+                        description = response.error;
+                    }
+                }
+                catch (e) {}
+
+                fail(description);
             }).always(function() {
                 this.loading(false);
             });
