@@ -1,7 +1,6 @@
 define(['parsley'], function() {
     var Mailer = function(formElement, config) {
         this.$form = $(formElement);
-        console.info('Mailer binding to:', this.$form);
 
         this.config = config || {};
 
@@ -44,19 +43,15 @@ define(['parsley'], function() {
                     this.loading(true);
                 }
             }).done(function(data) {
-                console.log(data);
             }).fail(function(xhr, status) {
-                console.log(status);
             }).always(function() {
                 this.loading(false);
             });
         },
 
         loading: function(loading) {
-            console.info('Loading: ', loading);
             if (loading) {
                 this.$form.find('.ajax-loader').show();
-                console.log(this.$form.find('input', 'textarea'));
                 this.$form.find('input, textarea, button').attr('disabled', 'disabled');
             }
             else {
