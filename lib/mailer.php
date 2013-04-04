@@ -68,7 +68,8 @@ class Mailer
             ));
         }
         else {
-            self::render('success');
+            $template = isset($this->_config['templates']) && isset($this->_config['templates']['success']) ? $this->_config['templates']['success'] : getcwd() . '/templates/success.html';
+            self::render($template);
         }
     }
 
@@ -102,7 +103,7 @@ class Mailer
         return $valid;
     }
 
-    static function render($templateName, $data = array(), $toString = false) {
+    static function render($template, $data = array(), $toString = false) {
         extract($data);
 
         if ($toString) {
@@ -112,7 +113,7 @@ class Mailer
             self::killCaching();
         }
 
-        include(getcwd()."/templates/{$templateName}.html");
+        include($template);
 
         if ($toString) {
             return ob_get_clean();
@@ -153,7 +154,7 @@ function exception_handler($exception) {
         ));
     }
     else {
-        Mailer::render('error', array(
+        Mailer::render(getcwd() . '/templates/error.html', array(
             'exception' => $exception
         ));
     }
