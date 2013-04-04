@@ -53,7 +53,19 @@ class Mailer
             $mail->AddReplyTo($data['email'], $data['name']);
         }
 
-        $mail->Subject = 'Bericht van ' . $data['name'] . ' via het contactformulier';
+        // Passing anonymous functions JavaScript-style is very cool.
+        if (isset($this->_config['subject'])) {
+            $subject = $this->_config['subject'];
+
+            if (is_callable($subject)) {
+                $subject = $subject($data);
+            }
+        }
+        else {
+            $subject = 'Bericht via het contactformulier';
+        }
+
+        $mail->Subject = $subject;
 
         $template = isset($this->_config['templates']) && isset($this->_config['templates']['mail']) ? $this->_config['templates']['mail'] : getcwd() . '/templates/mail.html';
 
