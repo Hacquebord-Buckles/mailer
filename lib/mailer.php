@@ -44,13 +44,21 @@ class Mailer
         $data = &$this->_data;
         $mail = &$this->_mail;
 
-        $mail->SetFrom($data['email'], $data['name']);
-        $mail->AddReplyTo($data['email'], $data['name']);
+        if (isset($this->_config['from'])) {
+            $mail->SetFrom($this->_config['from']['email'], $this->_config['from']['name']);
+            $mail->AddReplyTo($this->_config['from']['email'], $this->_config['from']['name']);
+        }
+        else {
+            $mail->SetFrom($data['email'], $data['name']);
+            $mail->AddReplyTo($data['email'], $data['name']);
+        }
 
         $mail->Subject = 'Bericht van ' . $data['name'] . ' via het contactformulier';
 
-        $mail->MsgHTML(nl2br($this->render('mail', $data, true)));
-        $mail->AltBody = $this->render('mail', $data, true);
+        $template = isset($this->_config['templates']) && isset($this->_config['templates']['mail']) ? $this->_config['templates']['mail'] : getcwd() . '/templates/mail.html';
+
+        $mail->MsgHTML(nl2br($this->render($template, $data, true)));
+        $mail->AltBody = $this->render($template, $data, true);
 
         $mail->send();
 
