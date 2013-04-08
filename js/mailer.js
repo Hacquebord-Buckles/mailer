@@ -1,4 +1,4 @@
-define(['parsley'], function() {
+(function() {
     var Mailer = function(formElement, config) {
         this.$form = $(formElement);
 
@@ -100,6 +100,4 @@ define(['parsley'], function() {
     };
 
     window.Mailer = Mailer;
-
-    return Mailer;
-});
+})();
